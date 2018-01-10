@@ -1,8 +1,24 @@
-<h1 align="center">Sylius Adyen Plugin</h1>
-
-## Support
-
-Do you want us to customize this plugin for your specific needs? Write us an email on mikolaj.krol@bitbag.pl :computer:
+<h1 align="center">
+    <a href="http://bitbag.shop" target="_blank">
+        <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/SyliusAdyenPlugin.png" />
+    </a>
+    <br />
+    <a href="https://packagist.org/packages/bitbag/cms-plugin" title="License" target="_blank">
+        <img src="https://img.shields.io/packagist/l/bitbag/cms-plugin.svg" />
+    </a>
+    <a href="https://packagist.org/packages/bitbag/cms-plugin" title="Version" target="_blank">
+        <img src="https://img.shields.io/packagist/v/bitbag/cms-plugin.svg" />
+    </a>
+    <a href="http://travis-ci.org/BitBagCommerce/SyliusCmsPlugin" title="Build status" target="_blank">
+        <img src="https://img.shields.io/travis/BitBagCommerce/SyliusCmsPlugin/master.svg" />
+    </a>
+    <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusCmsPlugin/" title="Scrutinizer" target="_blank">
+        <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusCmsPlugin.svg" />
+    </a>
+    <a href="https://packagist.org/packages/bitbag/cms-plugin" title="Total Downloads" target="_blank">
+        <img src="https://poser.pugx.org/bitbag/cms-plugin/downloads" />
+    </a>
+</h1>
 
 ## Installation
     
@@ -118,3 +134,6 @@ bitbag_sylius_adyen_plugin:
     $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
     $ (cd tests/Application && bin/console server:run -d web -e dev)
     ```
+## Support
+
+Do you want us to customize this plugin for your specific needs? Write us an email on mikolaj.krol@bitbag.pl :computer:

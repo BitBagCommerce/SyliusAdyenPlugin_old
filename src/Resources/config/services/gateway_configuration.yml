@@ -1,0 +1,6 @@
+services:
+    bitbag_sylius_adyen_plugin.form.type.adyen_gateway_configuration:
+        class: BitBag\SyliusAdyenPlugin\Form\Type\AdyenGatewayConfigurationType
+        tags:
+            - { name: sylius.gateway_configuration_type, type: adyen, label: bitbag_sylius_adyen_plugin.ui.ayden_gateway_label }
+            - { name: form.type }

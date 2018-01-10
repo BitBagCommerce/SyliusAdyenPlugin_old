@@ -1,0 +1,7 @@
+services:
+    bitbag_sylius_adyen_plugin.page.admin.payment_method.create:
+         class: Tests\BitBag\SyliusAdyenPlugin\Behat\Page\Admin\PaymentMethod\CreatePage
+         parent: "sylius.behat.page.admin.crud.create"
+         public: false
+         arguments:
+             - "sylius_admin_payment_method_create"

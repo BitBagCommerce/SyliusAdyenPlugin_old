@@ -1,0 +1,8 @@
+winzou_state_machine:
+    sylius_payment:
+        callbacks:
+            after:
+                bitbag_sylius_adyen_plugin_refund_process:
+                    on: ["refund"]
+                    do: ["@bitbag_sylius_adyen_plugin.payment_processing.refund", "process"]
+                    args: ["object"]

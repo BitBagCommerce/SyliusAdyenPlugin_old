@@ -1,0 +1,7 @@
+services:
+    bitbag_sylius_adyen_plugin.gateway_factory.adyen:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments:
+            - BitBag\SyliusAdyenPlugin\AdyenGatewayFactory
+        tags:
+            - { name: payum.gateway_factory_builder, factory: adyen }

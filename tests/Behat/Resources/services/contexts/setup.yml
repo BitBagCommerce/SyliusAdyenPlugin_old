@@ -1,0 +1,22 @@
+services:
+    bitbag_sylius_adyen_plugin.context.setup.adyen:
+        class: Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Setup\AdyenContext
+        arguments:
+            - "@sylius.behat.shared_storage"
+            - "@__symfony__.sylius.repository.payment_method"
+            - "@__symfony__.sylius.fixture.example_factory.payment_method"
+            - "@__symfony__.sylius.factory.payment_method_translation"
+            - "@__symfony__.sylius.manager.payment_method"
+
+        tags:
+            - { name: fob.context_service }
+
+    bitbag_sylius_adyen_plugin.context.setup.order:
+        class: Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Setup\OrderContext
+        arguments:
+            - "@bitbag_sylius_adyen_plugin.context.mocker.modification_request_adyen_bridge"
+            - "@__symfony__.doctrine.orm.default_entity_manager"
+            - "@__symfony__.sm.factory"
+            - "@__symfony__.payum"
+        tags:
+            - { name: fob.context_service }

@@ -1,0 +1,9 @@
+services:
+    bitbag_sylius_adyen_plugin.page.external.adyen_checkout:
+        class: Tests\BitBag\SyliusAdyenPlugin\Behat\Page\External\AdyenCheckoutPage
+        parent: 'sylius.behat.page'
+        public: 'false'
+        arguments:
+            - '@__symfony__.sylius.repository.payment_security_token'
+            - '@__symfony__.sylius.repository.payment'
+            - '@__symfony__.test.client'

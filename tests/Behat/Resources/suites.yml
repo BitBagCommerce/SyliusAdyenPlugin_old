@@ -1,0 +1,4 @@
+imports:
+    - suites/ui/managing_payment_method_adyen.yml
+    - suites/ui/paying_with_adyen_for_order.yml
+    - suites/ui/refunding_adyen_payment.yml

@@ -1,0 +1,15 @@
+bitbag_sylius_adyen_plugin:
+    environment:
+        not_blank: Environment cannot be blank.
+    merchant_account:
+        not_blank: Merchant account cannot be blank.
+    hmac_key:
+        not_blank: HMAC key cannot be blank.
+    hmac_notification:
+        not_blank: HMAC notification cannot be blank.
+    skin_code:
+        not_blank: Skin code cannot be blank.
+    ws_user:
+        not_blank: WS user cannot be blank.
+    ws_user_password:
+        not_blank: WS user password cannot be blank.

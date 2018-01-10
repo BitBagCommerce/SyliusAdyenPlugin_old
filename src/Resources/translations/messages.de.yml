@@ -1,0 +1,12 @@
+bitbag_sylius_adyen_plugin:
+    ui:
+          test_platform: Test platform
+          live_platform: Live platform
+          platform: Platform
+          merchant_account: Merchant account
+          hmac_key: HMAC key
+          hmac_notification: HMAC notification
+          skin_code: Skin code
+          ayden_gateway_label: Adyen
+          ws_user: WS user
+          ws_user_password: WS user password

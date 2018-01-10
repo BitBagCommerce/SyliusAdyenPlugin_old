@@ -1,0 +1,3 @@
+services:
+    bitbag_sylius_adyen_plugin.bridge.modification_request_adyen:
+        class: BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridge

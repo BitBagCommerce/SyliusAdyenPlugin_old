@@ -1,0 +1,8 @@
+bitbag_sylius_adyen_plugin_notify_action:
+    path: /payment/adyen/notify
+    methods: ["POST"]
+    defaults:
+        _controller: bitbag_sylius_adyen_plugin.controller.notify:doAction
+
+bitbag_sylius_adyen_plugin_refund:
+    resource: "@PayumBundle/Resources/config/routing/refund.xml"

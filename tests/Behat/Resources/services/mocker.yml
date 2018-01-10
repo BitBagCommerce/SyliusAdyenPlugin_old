@@ -1,0 +1,5 @@
+services:
+    bitbag_sylius_adyen_plugin.context.mocker.modification_request_adyen_bridge:
+        class: Tests\BitBag\SyliusAdyenPlugin\Behat\Mocker\ModificationRequestAdyenBridgeMocker
+        arguments:
+            - "@sylius.behat.mocker"

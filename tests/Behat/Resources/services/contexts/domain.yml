@@ -1,0 +1,8 @@
+services:
+    bitbag_sylius_adyen_plugin.context.domain.adyen:
+        class: Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Domain\AdyenNotificationContext
+        arguments:
+            - "@bitbag_sylius_adyen_plugin.page.external.adyen_checkout"
+            - "@__symfony__.sylius.repository.payment"
+        tags:
+            - { name: fob.context_service }

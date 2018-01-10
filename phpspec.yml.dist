@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: BitBag\SyliusAdyenPlugin
+        psr4_prefix: BitBag\SyliusAdyenPlugin

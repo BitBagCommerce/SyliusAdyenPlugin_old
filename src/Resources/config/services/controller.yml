@@ -1,0 +1,6 @@
+services:
+    bitbag_sylius_adyen_plugin.controller.notify:
+        class: BitBag\SyliusAdyenPlugin\Controller\NotifyController
+        arguments:
+            - "@payum"
+            - "@sylius.repository.payment"

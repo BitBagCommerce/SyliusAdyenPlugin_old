@@ -20,11 +20,11 @@
     </a>
 </h1>
 
-## Support
-
-Do you want us to customize this plugin for your specific needs? Write us an email on mikolaj.krol@bitbag.pl :computer:
-
 ## Installation
+
+```bash
+$ composer require bitbag/cms-plugin
+```
     
 Add plugin dependencies to your AppKernel.php file:
 ```php
@@ -138,3 +138,7 @@ bitbag_sylius_adyen_plugin:
     $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
     $ (cd tests/Application && bin/console server:run -d web -e dev)
     ```
+    
+## Support
+
+Do you want us to customize this plugin for your specific needs? Write us an email on mikolaj.krol@bitbag.pl :computer:

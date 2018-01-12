@@ -35,6 +35,7 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
 
     /**
      * @param RegistryInterface $payum
+     * @param Session $session
      */
     public function __construct(RegistryInterface $payum, Session $session)
     {

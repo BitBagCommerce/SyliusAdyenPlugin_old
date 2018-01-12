@@ -1,4 +1,24 @@
-<h1 align="center">Sylius Adyen Plugin</h1>
+<h1 align="center">
+    <a href="http://bitbag.shop" target="_blank">
+        <img src="https://raw.githubusercontent.com/bitbager/BitBagCommerceAssets/master/SyliusAdyenPlugin.png" />
+    </a>
+    <br />
+    <a href="https://packagist.org/packages/bitbag/adyen-plugin" title="License" target="_blank">
+        <img src="https://img.shields.io/packagist/l/bitbag/adyen-plugin.svg" />
+    </a>
+    <a href="https://packagist.org/packages/bitbag/adyen-plugin" title="Version" target="_blank">
+        <img src="https://img.shields.io/packagist/v/bitbag/adyen-plugin.svg" />
+    </a>
+    <a href="http://travis-ci.org/BitBagCommerce/SyliusAdyenPlugin" title="Build status" target="_blank">
+        <img src="https://img.shields.io/travis/BitBagCommerce/SyliusAdyenPlugin/master.svg" />
+    </a>
+    <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusAdyenPlugin/" title="Scrutinizer" target="_blank">
+        <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusAdyenPlugin.svg" />
+    </a>
+    <a href="https://packagist.org/packages/bitbag/adyen-plugin" title="Total Downloads" target="_blank">
+        <img src="https://poser.pugx.org/bitbag/adyen-plugin/downloads" />
+    </a>
+</h1>
 
 ## Support
 

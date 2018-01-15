@@ -97,7 +97,7 @@ final class StatusAction implements ActionInterface, ApiAwareInterface, GatewayA
      * @param string $authResult
      * @param GetStatusInterface $request
      */
-    private function resolvePaymentStatus(string $authResult, GetStatusInterface $request)
+    private function resolvePaymentStatus(string $authResult, GetStatusInterface $request): void
     {
         switch ($authResult) {
             case null:

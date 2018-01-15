@@ -20,7 +20,7 @@
 ## Installation
 
 ```bash
-$ composer require bitbag/cms-plugin
+$ composer require bitbag/adyen-plugin
 ```
     
 Add plugin dependencies to your AppKernel.php file:

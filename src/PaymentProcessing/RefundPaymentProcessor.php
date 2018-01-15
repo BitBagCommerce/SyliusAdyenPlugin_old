@@ -14,7 +14,6 @@ namespace BitBag\SyliusAdyenPlugin\PaymentProcessing;
 
 use BitBag\SyliusAdyenPlugin\AdyenGatewayFactory;
 use Payum\Core\Payum;
-use Payum\Core\Registry\RegistryInterface;
 use Payum\Core\Request\Refund;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
@@ -24,7 +23,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 final class RefundPaymentProcessor implements PaymentProcessorInterface
 {
     /**
-     * @var RegistryInterface|Payum
+     * @var Payum
      */
     private $payum;
 
@@ -34,10 +33,10 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
     private $session;
 
     /**
-     * @param RegistryInterface $payum
+     * @param Payum $payum
      * @param Session $session
      */
-    public function __construct(RegistryInterface $payum, Session $session)
+    public function __construct(Payum $payum, Session $session)
     {
         $this->payum = $payum;
         $this->session = $session;

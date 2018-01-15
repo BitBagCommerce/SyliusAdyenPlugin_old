@@ -94,7 +94,7 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Generic
 
         if (false === isset($extraData['capture_token']) && $token) {
             $extraData['captureToken'] = $token->getHash();
-            $extraData['refundToken'] = $this->tokenFactory->createRefundToken($token->getGatewayName(), $token->getDetails())->getHash();
+            $extraData['refundToken'] = $this->tokenFactory->createRefundToken($token->getGatewayName(), $token->getDetails() ?? $model)->getHash();
             $model['resURL'] = $token->getTargetUrl();
         }
 

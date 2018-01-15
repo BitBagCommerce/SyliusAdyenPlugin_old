@@ -73,7 +73,7 @@ final class AdyenBridge implements AdyenBridgeInterface
     ];
 
     /**
-     * @var array
+     * @var ArrayObject
      */
     protected $options = [
         'skinCode' => null,
@@ -111,7 +111,6 @@ final class AdyenBridge implements AdyenBridgeInterface
             'ws_user',
             'ws_user_password',
         ]);
-
 
         $this->options = $options;
     }

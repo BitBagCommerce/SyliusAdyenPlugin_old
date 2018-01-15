@@ -79,7 +79,27 @@ final class StatusAction implements ActionInterface, ApiAwareInterface, GatewayA
 
         $payment->setDetails($details);
 
-        switch ($details['authResult']) {
+        $this->resolvePaymentStatus($details['authResult'], $request);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supports($request): bool
+    {
+        return
+            $request instanceof GetStatusInterface &&
+            $request->getModel() instanceof PaymentInterface
+        ;
+    }
+
+    /**
+     * @param string $authResult
+     * @param GetStatusInterface $request
+     */
+    private function resolvePaymentStatus(string $authResult, GetStatusInterface $request)
+    {
+        switch ($authResult) {
             case null:
                 $request->markNew();
                 break;
@@ -120,16 +140,5 @@ final class StatusAction implements ActionInterface, ApiAwareInterface, GatewayA
                 $request->markUnknown();
                 break;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function supports($request): bool
-    {
-        return
-            $request instanceof GetStatusInterface &&
-            $request->getModel() instanceof PaymentInterface
-        ;
     }
 }

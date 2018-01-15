@@ -14,7 +14,6 @@ namespace BitBag\SyliusAdyenPlugin\Controller;
 
 use Payum\Core\Exception\LogicException;
 use Payum\Core\Payum;
-use Payum\Core\Registry\RegistryInterface;
 use Payum\Core\Request\Notify;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Repository\PaymentRepositoryInterface;
@@ -35,10 +34,10 @@ final class NotifyController
     private $paymentRepository;
 
     /**
-     * @param RegistryInterface $payum
+     * @param Payum $payum
      * @param PaymentRepositoryInterface $paymentRepository
      */
-    public function __construct(RegistryInterface $payum, PaymentRepositoryInterface $paymentRepository)
+    public function __construct(Payum $payum, PaymentRepositoryInterface $paymentRepository)
     {
         $this->payum = $payum;
         $this->paymentRepository = $paymentRepository;

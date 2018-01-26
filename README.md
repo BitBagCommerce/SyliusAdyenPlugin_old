@@ -12,9 +12,6 @@
     <a href="http://travis-ci.org/BitBagCommerce/SyliusAdyenPlugin" title="Build status" target="_blank">
         <img src="https://img.shields.io/travis/BitBagCommerce/SyliusAdyenPlugin/master.svg" />
     </a>
-    <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusAdyenPlugin/" title="Scrutinizer" target="_blank">
-        <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusAdyenPlugin.svg" />
-    </a>
     <a href="https://packagist.org/packages/bitbag/adyen-plugin" title="Total Downloads" target="_blank">
         <img src="https://poser.pugx.org/bitbag/adyen-plugin/downloads" />
     </a>
@@ -23,7 +20,7 @@
 ## Installation
 
 ```bash
-$ composer require bitbag/cms-plugin
+$ composer require bitbag/adyen-plugin
 ```
     
 Add plugin dependencies to your AppKernel.php file:

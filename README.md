@@ -56,7 +56,6 @@ imports:
 
    ...
    
-
    - { resource: "@BitBagSyliusAdyenPlugin/Resources/config/state_machine.yml" }
 ```
 

@@ -49,6 +49,20 @@ bitbag_sylius_adyen_plugin:
     resource: "@BitBagSyliusAdyenPlugin/Resources/config/routing.yml"
 ```
 
+Import required config in your `app/config/config.yml` file:
+
+```yaml
+
+# app/config/config.yml
+
+imports:
+
+   ...
+   
+
+   - { resource: "@BitBagSyliusAdyenPlugin/Resources/config/state_machine.yml" }
+```
+
 ## Settings
 
 ### Signature for notifications

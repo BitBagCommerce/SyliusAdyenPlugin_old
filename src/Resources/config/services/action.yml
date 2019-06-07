@@ -1,26 +1,31 @@
 services:
     bitbag_sylius_adyen_plugin.payum_action.capture:
         class: BitBag\SyliusAdyenPlugin\Action\CaptureAction
+        public: true
         tags:
             - { name: payum.action, factory: adyen, alias: payum.action.capture }
 
     bitbag_sylius_adyen_plugin.payum_action.notify:
         class: BitBag\SyliusAdyenPlugin\Action\NotifyAction
+        public: true
         tags:
             - { name: payum.action, factory: adyen, alias: payum.action.notify }
 
     bitbag_sylius_adyen_plugin.payum_action.status:
         class: BitBag\SyliusAdyenPlugin\Action\StatusAction
+        public: true
         tags:
             - { name: payum.action, factory: adyen, alias: payum.action.status }
 
     bitbag_sylius_adyen_plugin.payum_action.convert_payment:
         class: BitBag\SyliusAdyenPlugin\Action\ConvertPaymentAction
+        public: true
         tags:
             - { name: payum.action, factory: adyen, alias: payum.action.convert_payment }
 
     bitbag_sylius_adyen_plugin.payum_action.refund:
         class: BitBag\SyliusAdyenPlugin\Action\RefundAction
+        public: true
         arguments:
             - "@bitbag_sylius_adyen_plugin.bridge.modification_request_adyen"
         tags:

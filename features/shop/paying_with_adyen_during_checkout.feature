@@ -58,3 +58,12 @@ Feature: Paying with Adyen during checkout
         When I confirm my order with Adyen payment
         Then I should get a notification of a successful transaction
         And Payment status should has been completed
+
+    @ui
+    Scenario: Failed payment notification should mark the payment as failed
+        Given I added product "PHP T-Shirt" to the cart
+        And I have proceeded selecting "Adyen" payment method
+        And I confirm my order with Adyen payment
+        When I cancel my Adyen payment
+        Then I should get a notification of a failed transaction
+        And the payment status should be failed

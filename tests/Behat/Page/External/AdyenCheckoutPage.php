@@ -180,6 +180,23 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
     /**
      * {@inheritDoc}
      */
+    public function failedAuthorisationWithoutReasonNotify(): void
+    {
+        $token = $this->findToken('notify');
+
+        $data = $this->notifyData;
+        $data['eventCode'] = 'AUTHORISATION';
+        $data['success'] = 'false';
+        $data['reason'] = '';
+        $data['merchantReference'] = $this->createMerchantReferenceWithToken($token);
+        $data['additionalData_hmacSignature'] = $this->adyenBridge->createSignatureForNotification($data);
+
+        $this->client->request('POST', '/payment/adyen/notify', $data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     protected function getUrl(array $urlParameters = []): string
     {
         return 'https://test.adyen.com/hpp/pay.shtml';

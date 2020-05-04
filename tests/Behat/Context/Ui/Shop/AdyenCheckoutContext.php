@@ -104,6 +104,14 @@ final class AdyenCheckoutContext implements Context
     }
 
     /**
+     * @Then /^I should get a notification of a failed transaction$/
+     */
+    public function iShouldGetANotificationOfAFailedTransaction()
+    {
+        $this->adyenCheckoutPage->failedAuthorisationWithoutReasonNotify();
+    }
+
+    /**
      * @Then Payment status should has been completed
      */
     public function paymentStatusShouldHasBeenCompleted(): void
@@ -116,5 +124,17 @@ final class AdyenCheckoutContext implements Context
         foreach ($payments as $payment) {
             Assert::true(PaymentInterface::STATE_COMPLETED === $payment->getState());
         }
+    }
+
+    /**
+     * @Given /^the payment status should be failed/
+     */
+    public function thePaymentStatusShouldBeFailed()
+    {
+        /** @var PaymentInterface $payment */
+        $payment = $this->paymentRepository->findOneBy([]);
+
+        Assert::notNull($payment, 0);
+        Assert::eq($payment->getState(), PaymentInterface::STATE_FAILED);
     }
 }

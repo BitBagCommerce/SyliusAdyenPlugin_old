@@ -78,7 +78,7 @@ final class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayA
             if (AdyenBridgeInterface::AUTHORISATION === $httpRequest->request['eventCode']) {
                 if (true === filter_var($httpRequest->request['success'], FILTER_VALIDATE_BOOLEAN)) {
                     $httpRequest->request['authResult'] = AdyenBridgeInterface::AUTHORISED;
-                } elseif (!empty($httpRequest->request['reason'])) {
+                } else {
                     $httpRequest->request['authResult'] = AdyenBridgeInterface::REFUSED;
                 }
             }

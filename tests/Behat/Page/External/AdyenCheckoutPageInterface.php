@@ -40,6 +40,12 @@ interface AdyenCheckoutPageInterface extends PageInterface
      * @throws UnsupportedDriverActionException
      * @throws DriverException
      */
+    public function failedAuthorisationWithoutReasonNotify(): void;
+
+    /**
+     * @throws UnsupportedDriverActionException
+     * @throws DriverException
+     */
     public function successRefundedPaymentNotify(): void;
 
     /**

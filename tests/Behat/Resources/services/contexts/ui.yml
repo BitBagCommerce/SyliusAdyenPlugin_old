@@ -1,11 +1,10 @@
 services:
+    _defaults: { public: true }
     bitbag_sylius_adyen_plugin.context.ui.admin.managing_payment_method_adyen:
         class: Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Ui\Admin\ManagingPaymentMethodAdyenContext
         arguments:
             - "@sylius.behat.current_page_resolver"
             - "@bitbag_sylius_adyen_plugin.page.admin.payment_method.create"
-        tags:
-            - { name: fob.context_service }
 
     bitbag_sylius_adyen_plugin.context.ui.shop.adyen_checkout:
         class: Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Ui\Shop\AdyenCheckoutContext
@@ -13,13 +12,9 @@ services:
             - '@sylius.behat.page.shop.checkout.complete'
             - '@bitbag_sylius_adyen_plugin.page.external.adyen_checkout'
             - '@sylius.behat.page.shop.order.show'
-            - '@__symfony__.sylius.repository.payment'
-        tags:
-            - { name: fob.context_service }
+            - '@sylius.repository.payment'
 
     bitbag_sylius_adyen_plugin.context.ui.admin.order:
         class: Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Ui\Admin\OrderContext
         arguments:
             - "@sylius.behat.page.admin.order.show"
-        tags:
-            - { name: fob.context_service }

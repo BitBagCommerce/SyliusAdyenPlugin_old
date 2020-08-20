@@ -1,7 +1,7 @@
 default:
     suites:
         ui_refunding_adyen_payment:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
                 - sylius.behat.context.hook.email_spool
 

@@ -68,9 +68,9 @@ final class ManagingPaymentMethodAdyenContext implements Context
     }
 
     /**
-     * @return CreatePageInterface|SymfonyPageInterface
+     * @return CreatePageInterface
      */
-    private function resolveCurrentPage(): SymfonyPageInterface
+    private function resolveCurrentPage()
     {
         return $this->currentPageResolver->getCurrentPageWithForm([
             $this->createPage,

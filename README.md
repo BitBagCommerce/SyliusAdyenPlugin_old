@@ -38,7 +38,7 @@ We work on stable, supported and up-to-date versions of packages. We recommend y
 
 | Package | Version |
 | --- | --- |
-| PHP | ^7.3 |
+| PHP | ^7.1 |
 | Sylius | 1.0.4 |
 
 ----

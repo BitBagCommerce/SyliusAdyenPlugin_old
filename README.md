@@ -99,7 +99,7 @@ imports:
 
 ### How to get HMAC keys for a skin
 
-- https://docs.adyen.com/developers/user-management/how-to-get-hmac-keys-for-a-skin
+https://docs.adyen.com/classic-integration/hosted-payment-pages/skin#configuration
 
 ### How to get code for a skin
 

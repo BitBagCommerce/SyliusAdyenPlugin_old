@@ -47,13 +47,14 @@ We work on stable, supported and up-to-date versions of packages. We recommend y
 $ composer require bitbag/adyen-plugin
 ```
     
-Add plugin dependencies to your `config/bundles.php file:
+Add plugin dependencies to your `config/bundles.php` file:
 
 ```php
 return [
     ...
     BitBag\SyliusAdyenPlugin\BitBagSyliusAdyenPlugin::class => ['all' => true],
 ];
+```
 
 Import routing in your `config/routes.yaml` file:
 

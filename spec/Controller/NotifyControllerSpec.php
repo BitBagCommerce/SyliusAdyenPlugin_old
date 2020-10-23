@@ -43,7 +43,11 @@ final class NotifyControllerSpec extends ObjectBehavior
         GatewayInterface $gateway
     ): void
     {
-        $request = new Request([], ['merchantReference' => '0000001-11']);
+        $request = new Request([], ['notificationItems' => [[
+            'NotificationRequestItem' => [
+                'merchantReference' => '0000001-11'
+            ],
+        ]]]);
 
         $payment->getDetails()->willReturn([
             'extraData' => '{"notifyToken":"test"}'

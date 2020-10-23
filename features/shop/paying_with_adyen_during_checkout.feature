@@ -50,11 +50,3 @@ Feature: Paying with Adyen during checkout
         And I cancel my Adyen payment
         Then I should be notified that my payment has been cancelled
         And I should be able to pay again
-
-    @ui
-    Scenario: Get a notification of a successful payment
-        Given I added product "PHP T-Shirt" to the cart
-        And I have proceeded selecting "Adyen" payment method
-        When I confirm my order with Adyen payment
-        Then I should get a notification of a successful transaction
-        And Payment status should has been completed

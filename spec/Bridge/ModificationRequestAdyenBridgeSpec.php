@@ -14,7 +14,7 @@ namespace spec\BitBag\SyliusAdyenPlugin\Bridge;
 
 use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridgeInterface;
 use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridge;
-use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInteface;
+use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInterface;
 use PhpSpec\ObjectBehavior;
 
 final class ModificationRequestAdyenBridgeSpec extends ObjectBehavior
@@ -26,7 +26,7 @@ final class ModificationRequestAdyenBridgeSpec extends ObjectBehavior
 
     function it_implements_adyen_bridge_interface(): void
     {
-        $this->shouldHaveType(ModificationRequestAdyenBridgeInteface::class);
+        $this->shouldHaveType(ModificationRequestAdyenBridgeInterface::class);
     }
 
     function it_refund_request(

@@ -1,3 +1,14 @@
 imports:
     - { resource: "../../Behat/Resources/services.yml" }
     - { resource: "../../../vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml" }
+
+# workaround needed for strange "test.client.history" problem
+# see https://github.com/FriendsOfBehat/SymfonyExtension/issues/88
+services:
+    Symfony\Component\BrowserKit\AbstractBrowser: '@test.client'
+
+    bitbag_sylius_adyen_plugin.bridge.modification_request_adyen:
+        class: Tests\BitBag\SyliusAdyenPlugin\Behat\Mocker\ModificationRequestAdyenBridge
+        public: true
+        arguments:
+            - "@service_container"

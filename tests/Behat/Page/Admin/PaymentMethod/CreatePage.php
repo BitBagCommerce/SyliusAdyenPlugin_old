@@ -37,7 +37,7 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
      */
     public function setAdyenHmacKey(string $hmacKey): void
     {
-        $this->getDocument()->fillField('HMAC key', $hmacKey);
+        $this->getDocument()->fillField('HMAC Key', $hmacKey);
     }
 
     /**
@@ -53,7 +53,7 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
      */
     public function setAdyenHmacNotification(string $hmacNotification): void
     {
-        $this->getDocument()->fillField('HMAC notification', $hmacNotification);
+        $this->getDocument()->fillField('HMAC Key notification', $hmacNotification);
     }
 
     /**

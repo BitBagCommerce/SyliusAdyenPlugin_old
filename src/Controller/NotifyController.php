@@ -52,9 +52,13 @@ final class NotifyController
      */
     public function doAction(Request $request): Response
     {
-        if (null === $merchantReference = $request->request->get('merchantReference', null)) {
+        $notificationItems = $request->request->get('notificationItems', []);
+
+        if (count($notificationItems) === 0 || !isset($notificationItems[0]['NotificationRequestItem']['merchantReference'])) {
             throw new LogicException("A parameter merchantReference not be found.");
         }
+
+        $merchantReference = $notificationItems[0]['NotificationRequestItem']['merchantReference'];
 
         $paymentId = 2 === count(explode('-', $merchantReference)) ?
             explode('-', $merchantReference)[1] : null

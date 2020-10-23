@@ -47,47 +47,43 @@ We work on stable, supported and up-to-date versions of packages. We recommend y
 $ composer require bitbag/adyen-plugin
 ```
     
-Add plugin dependencies to your AppKernel.php file:
-```php
-public function registerBundles()
-{
-    return array_merge(parent::registerBundles(), [
-        ...
-        
-        new \BitBag\SyliusAdyenPlugin\BitBagSyliusAdyenPlugin(),
-    ]);
-}
-```
+Add plugin dependencies to your `config/bundles.php file:
 
-Import routing in your `app/config/routing.yml` file:
+```php
+return [
+    ...
+    BitBag\SyliusAdyenPlugin\BitBagSyliusAdyenPlugin::class => ['all' => true],
+];
+
+Import routing in your `config/routes.yaml` file:
 
 ```yaml
 
-# app/config/routing.yml
+# config/routes.yaml
 ...
 
 bitbag_sylius_adyen_plugin:
     resource: "@BitBagSyliusAdyenPlugin/Resources/config/routing.yml"
 ```
 
-Import required config in your `app/config/config.yml` file:
+Import required config in your `config/pacakges/_sylius.yaml` file:
 
 ```yaml
 
-# app/config/config.yml
+# config/pacakges/_sylius.yaml
 
 imports:
 
    ...
    
-   - { resource: "@BitBagSyliusAdyenPlugin/Resources/config/state_machine.yml" }
+   - { resource: "@BitBagSyliusAdyenPlugin/Resources/config/config.yml" }
 ```
 
 ## Settings
 ----
 ### Signature for notifications
 
-- https://docs.adyen.com/developers/ecommerce-integration/hmac-signature-calculation/signature-for-notifications
+- https://docs.adyen.com/development-resources/webhooks#set-up-notifications-in-your-customer-area
 
 ### Settings for notifications
 

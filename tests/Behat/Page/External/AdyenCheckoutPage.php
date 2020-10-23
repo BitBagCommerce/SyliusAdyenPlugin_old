@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusAdyenPlugin\Behat\Page\External;
 
+use Adyen\Util\HmacSignature;
 use Behat\Mink\Session;
 use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridge;
 use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridgeInterface;
@@ -60,21 +61,35 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
      * @var array
      */
     private $notifyData = [
-        'pspReference'=>  '8815113926211293',
-        'originalReference'=> '',
-        'merchantAccountCode'=>  'TestPL',
-        'merchantReference'=>  '000000026-26',
-        'value'=> '9630',
-        'currency'=>  'USD',
-        'eventCode'=> 'AUTHORISATION',
-        'success'=> 'true',
-        'reason'=> 'null',
-        'operations'=>  '',
-        'paymentMethod'=>  'dotpay',
-        'live' =>  'false',
-        'eventDate' => '2017-11-22T23:17:12.06Z',
+        'live' => false,
+        'notificationItems' => [
+            [
+                'NotificationRequestItem' => [
+                    'additionalData' => [
+                        'hmacSignature' => null,
+                    ],
+                    'amount' => [
+                        'currency' => 'USD',
+                        'value' => '9630',
+                    ],
+                    'pspReference' =>  '8815113926211293',
+                    'originalReference' => '',
+                    'merchantAccountCode' => 'TestPL',
+                    'merchantReference' =>  '000000026-26',
+                    'eventCode' => 'AUTHORISATION',
+                    'success' => 'true',
+                    'reason' => 'null',
+                    'operations' =>  '',
+                    'paymentMethod' =>  'dotpay',
+                    'live' =>  'false',
+                    'eventDate' => '2017-11-22T23:17:12.06Z',
+                ],
+            ]
+        ],
     ];
 
+    /** @var string */
+    private $notificationHmac = '70E4534EACDDFF68B79FD36DEE365B9905AC9A501406CE5DCFF7C67A69CE98A4';
 
     public function __construct(
         Session $session,
@@ -82,8 +97,7 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
         RepositoryInterface $securityTokenRepository,
         EntityRepository $paymentRepository,
         Client $client
-    )
-    {
+    ) {
         parent::__construct($session, $parameters);
 
         $this->paymentRepository = $paymentRepository;
@@ -94,7 +108,7 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
             'skinCode' => 'test',
             'merchantAccount' => 'test',
             'hmacKey' => 111,
-            'notification_hmac' => 111,
+            'notification_hmac' => $this->notificationHmac,
             'environment' => 'test',
             'notification_method' => 'basic',
             'ws_user' => 'test',
@@ -139,8 +153,11 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
         $token = $this->findToken('notify');
 
         $data = $this->notifyData;
-        $data['merchantReference'] = $this->createMerchantReferenceWithToken($token);
-        $data['additionalData_hmacSignature'] = $this->adyenBridge->createSignatureForNotification($data);
+        $data['notificationItems'][0]['NotificationRequestItem']['merchantReference'] = $this->createMerchantReferenceWithToken($token);
+        $data['notificationItems'][0]['NotificationRequestItem']['additionalData']['hmacSignature'] = (new HmacSignature())->calculateNotificationHMAC(
+            $this->notificationHmac,
+            $this->notifyData['notificationItems'][0]['NotificationRequestItem']
+        );
 
         $this->client->request('POST', '/payment/adyen/notify', $data);
     }

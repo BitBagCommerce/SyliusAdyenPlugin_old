@@ -20,8 +20,10 @@ use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Exception\UnsupportedApiException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
+use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\Notify;
+use Symfony\Component\HttpFoundation\Response;
 
 final class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayAwareInterface
 {
@@ -57,44 +59,49 @@ final class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayA
 
         $this->gateway->execute($httpRequest = new GetHttpRequest());
 
-        if (!isset($httpRequest->request['merchantReference']) || empty($httpRequest->request['merchantReference'])) {
+        $data = $httpRequest->request['notificationItems'][0]['NotificationRequestItem'];
+
+        if (!isset($data['merchantReference']) || empty($data['merchantReference'])) {
             $details['response_status'] = 401;
-            return;
+
+            throw new HttpResponse(null, Response::HTTP_UNAUTHORIZED);
         }
 
-        if (!isset($details['merchantReference']) || ($details['merchantReference'] !== $httpRequest->request['merchantReference'])) {
+        if (!isset($details['merchantReference']) || ($details['merchantReference'] !== $data['merchantReference'])) {
             $details['response_status'] = 402;
-            return;
+
+            throw new HttpResponse(null, Response::HTTP_PAYMENT_REQUIRED);
         }
 
-        if (false === $this->api->verifyNotification($httpRequest->request)) {
+        if (false === $this->api->verifyNotification($data)) {
             $details['response_status'] = 403;
-            return;
+
+            throw new HttpResponse(null, Response::HTTP_FORBIDDEN);
         }
 
-        if (isset($httpRequest->request['eventCode'])) {
-            $httpRequest->request['authResult'] = $httpRequest->request['eventCode'];
+        if (isset($data['eventCode'])) {
+            $data['authResult'] = $data['eventCode'];
 
-            if (AdyenBridgeInterface::AUTHORISATION === $httpRequest->request['eventCode']) {
-                if (true === filter_var($httpRequest->request['success'], FILTER_VALIDATE_BOOLEAN)) {
-                    $httpRequest->request['authResult'] = AdyenBridgeInterface::AUTHORISED;
-                } elseif (!empty($httpRequest->request['reason'])) {
-                    $httpRequest->request['authResult'] = AdyenBridgeInterface::REFUSED;
+            if (AdyenBridgeInterface::AUTHORISATION === $data['eventCode']) {
+                if (true === filter_var($data['success'], FILTER_VALIDATE_BOOLEAN)) {
+                    $data['authResult'] = AdyenBridgeInterface::AUTHORISED;
+                } else {
+                    $data['authResult'] = AdyenBridgeInterface::REFUSED;
                 }
             }
 
-            if (AdyenBridgeInterface::REFUND === $httpRequest->request['eventCode']) {
-                if (true === filter_var($httpRequest->request['success'], FILTER_VALIDATE_BOOLEAN)) {
-                    $httpRequest->request['authResult'] = AdyenBridgeInterface::REFUND;
-                } elseif (!empty($httpRequest->request['reason'])) {
-                    $httpRequest->request['authResult'] = AdyenBridgeInterface::REFUSED;
+            if (AdyenBridgeInterface::REFUND === $data['eventCode']) {
+                if (true === filter_var($data['success'], FILTER_VALIDATE_BOOLEAN)) {
+                    $data['authResult'] = AdyenBridgeInterface::REFUND;
+                } else {
+                    $data['authResult'] = AdyenBridgeInterface::REFUSED;
                 }
             }
         }
 
-        $details['authResult'] = $httpRequest->request['authResult'];
+        $details['authResult'] = $data['authResult'];
 
-        $details['pspReference'] = $httpRequest->request['pspReference'];
+        $details['pspReference'] = $data['pspReference'];
 
         $details['response_status'] = 200;
     }

@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "sylius/sylius": "^1.7"
+        "sylius/sylius": "^1.7",
+        "adyen/php-api-library": "^8.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -42,10 +43,5 @@
     },
     "autoload-dev": {
         "classmap": ["tests/Application/Kernel.php"]
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.7-dev"
-        }
     }
 }

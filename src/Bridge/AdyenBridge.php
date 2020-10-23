@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAdyenPlugin\Bridge;
 
+use Adyen\Util\HmacSignature;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\HttpClientInterface;
 
@@ -177,26 +178,12 @@ final class AdyenBridge implements AdyenBridgeInterface
 
     /**
      * @param array $params
-     *
      * @return bool
+     * @throws \Adyen\AdyenException
      */
     public function verifyNotification(array $params): bool
     {
-        if (empty($params['additionalData_hmacSignature'])) {
-            return false;
-        }
-
-        $merchantSig = $params['additionalData_hmacSignature'];
-
-        $data = [];
-
-        foreach (array_keys($this->notificationFields) as $fieldKey) {
-            if (isset($params[$fieldKey])) {
-                $data[$fieldKey] = $params[$fieldKey];
-            }
-        }
-
-        return $merchantSig === $this->merchantSig($data, true,'notification_hmac');
+        return (new HmacSignature())->isValidNotificationHMAC($this->options['notification_hmac'], $params);
     }
 
     /**

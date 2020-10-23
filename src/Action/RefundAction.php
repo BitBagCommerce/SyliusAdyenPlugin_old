@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusAdyenPlugin\Action;
 
 use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridgeInterface;
-use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInteface;
+use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -34,14 +34,14 @@ final class RefundAction implements ActionInterface, ApiAwareInterface, GatewayA
     protected $api;
 
     /**
-     * @var ModificationRequestAdyenBridgeInteface
+     * @var ModificationRequestAdyenBridgeInterface
      */
     private $modificationRequestAdyenBridge;
 
     /**
-     * @param ModificationRequestAdyenBridgeInteface $modificationRequestAdyenBridge
+     * @param ModificationRequestAdyenBridgeInterface $modificationRequestAdyenBridge
      */
-    public function __construct(ModificationRequestAdyenBridgeInteface $modificationRequestAdyenBridge)
+    public function __construct(ModificationRequestAdyenBridgeInterface $modificationRequestAdyenBridge)
     {
         $this->modificationRequestAdyenBridge = $modificationRequestAdyenBridge;
     }

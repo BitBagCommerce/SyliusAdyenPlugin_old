@@ -14,7 +14,7 @@ namespace spec\BitBag\SyliusAdyenPlugin\Action;
 
 use BitBag\SyliusAdyenPlugin\Action\RefundAction;
 use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridgeInterface;
-use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInteface;
+use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -26,7 +26,7 @@ use Sylius\Component\Core\Model\PaymentInterface;
 
 final class RefundActionSpec extends ObjectBehavior
 {
-    function let(ModificationRequestAdyenBridgeInteface $modificationRequestAdyenBridge): void
+    function let(ModificationRequestAdyenBridgeInterface $modificationRequestAdyenBridge): void
     {
         $this->beConstructedWith($modificationRequestAdyenBridge);
     }
@@ -56,7 +56,7 @@ final class RefundActionSpec extends ObjectBehavior
         \ArrayObject $arrayObject,
         GatewayInterface $gateway,
         PaymentInterface $payment,
-        ModificationRequestAdyenBridgeInteface $modificationRequestAdyenBridge,
+        ModificationRequestAdyenBridgeInterface $modificationRequestAdyenBridge,
         AdyenBridgeInterface $adyenBridge
     ): void
     {

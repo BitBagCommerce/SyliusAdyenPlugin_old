@@ -6,6 +6,10 @@ imports:
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
 
+    - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
+
+    - { resource: "@BitBagSyliusAdyenPlugin/Resources/config/config.yml" }
+
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
 

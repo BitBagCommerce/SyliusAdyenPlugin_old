@@ -51,11 +51,6 @@ final class AdyenBridgeSpec extends ObjectBehavior
         $this->verifySign(['merchantSig' => 'test'])->shouldReturn(false);
     }
 
-    function it_failed_to_verify_notification(): void
-    {
-        $this->verifyNotification(['additionalData_hmacSignature' => 'test'])->shouldReturn(false);
-    }
-
     function it_failed_to_verify_request(): void
     {
         $data = [

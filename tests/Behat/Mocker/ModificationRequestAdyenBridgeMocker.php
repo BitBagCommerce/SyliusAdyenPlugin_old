@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusAdyenPlugin\Behat\Mocker;
 
-use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInteface;
+use BitBag\SyliusAdyenPlugin\Bridge\ModificationRequestAdyenBridgeInterface;
 use Sylius\Behat\Service\Mocker\Mocker;
 
 final class ModificationRequestAdyenBridgeMocker
@@ -33,7 +33,7 @@ final class ModificationRequestAdyenBridgeMocker
     public function refundRequest()
     {
         $modificationRequestAdyenBridge = $this->mocker
-            ->mockService('bitbag_sylius_adyen_plugin.bridge.modification_request_adyen', ModificationRequestAdyenBridgeInteface::class)
+            ->mockService('bitbag_sylius_adyen_plugin.bridge.modification_request_adyen', ModificationRequestAdyenBridgeInterface::class)
         ;
 
         $modificationRequestAdyenBridge

@@ -44,29 +44,6 @@ final class NotifyActionSpec extends ObjectBehavior
         $this->shouldHaveType(GatewayAwareInterface::class);
     }
 
-    function it_executes(
-        Notify $request,
-        \ArrayObject $arrayObject,
-        GatewayInterface $gateway,
-        PaymentInterface $payment
-    ): void
-    {
-        $httpRequest = new GetHttpRequest();
-
-        $httpRequest->request = [
-            'merchantReference' => '1000-11',
-        ];
-
-        $gateway->execute($httpRequest);
-
-        $this->setGateway($gateway);
-
-        $request->getModel()->willReturn($arrayObject);
-        $request->getFirstModel()->willReturn($payment);
-
-        $this->execute($request);
-    }
-
     function it_supports_only_notify_request_and_array_access(
         Notify $request,
         \ArrayAccess $arrayAccess

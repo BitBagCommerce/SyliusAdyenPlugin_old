@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAdyenPlugin\Bridge;
 
-final class ModificationRequestAdyenBridge implements ModificationRequestAdyenBridgeInteface
+final class ModificationRequestAdyenBridge implements ModificationRequestAdyenBridgeInterface
 {
     /**
      * {@inheritDoc}
@@ -22,8 +22,7 @@ final class ModificationRequestAdyenBridge implements ModificationRequestAdyenBr
         array $modificationAmount,
         string $originalReference,
         string $reference
-    ): \stdClass
-    {
+    ): \stdClass {
         return $adyenBridge->refundAction($modificationAmount, $originalReference, $reference);
     }
 }

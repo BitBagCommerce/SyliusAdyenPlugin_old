@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAdyenPlugin\Bridge;
 
-interface ModificationRequestAdyenBridgeInteface
+interface ModificationRequestAdyenBridgeInterface
 {
     /**
      * @param AdyenBridgeInterface $adyenBridge

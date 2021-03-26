@@ -69,11 +69,11 @@ bitbag_sylius_adyen_plugin:
     resource: "@BitBagSyliusAdyenPlugin/Resources/config/routing.yml"
 ```
 
-Import required config in your `config/pacakges/_sylius.yaml` file:
+Import required config in your `config/packages/_sylius.yaml` file:
 
 ```yaml
 
-# config/pacakges/_sylius.yaml
+# config/packages/_sylius.yaml
 
 imports:
 

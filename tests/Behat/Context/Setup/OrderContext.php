@@ -14,7 +14,7 @@ namespace Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use BitBag\SyliusAdyenPlugin\AdyenGatewayFactory;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Payum\Core\Payum;
 use Payum\Core\Registry\RegistryInterface;
 use SM\Factory\FactoryInterface as StateMachineFactoryInterface;
@@ -26,7 +26,7 @@ use Tests\BitBag\SyliusAdyenPlugin\Behat\Mocker\ModificationRequestAdyenBridgeMo
 final class OrderContext implements Context
 {
     /**
-     * @var ObjectManager
+     * @var EntityManager
      */
     private $objectManager;
 
@@ -53,7 +53,7 @@ final class OrderContext implements Context
      */
     public function __construct(
         ModificationRequestAdyenBridgeMocker $modificationRequestAdyenBridgeMocker,
-        ObjectManager $objectManager,
+        EntityManager $objectManager,
         StateMachineFactoryInterface $stateMachineFactory,
         RegistryInterface $payum
     ) {

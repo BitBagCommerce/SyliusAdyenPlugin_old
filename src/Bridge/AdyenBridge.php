@@ -74,7 +74,7 @@ final class AdyenBridge implements AdyenBridgeInterface
     ];
 
     /**
-     * @var ArrayObject
+     * @var \Payum\Core\Bridge\Spl\ArrayObject|array<string, mixed>
      */
     protected $options = [
         'skinCode' => null,
@@ -95,12 +95,11 @@ final class AdyenBridge implements AdyenBridgeInterface
 
     /**
      * @param array               $options
-     * @param HttpClientInterface $client
      *
      * @throws \Payum\Core\Exception\InvalidArgumentException if an option is invalid
      * @throws \Payum\Core\Exception\LogicException if a sandbox is not boolean
      */
-    public function __construct(array $options, HttpClientInterface $client = null)
+    public function __construct(array $options)
     {
         $options = ArrayObject::ensureArrayObject($options);
         $options->defaults($this->options);
@@ -140,7 +139,7 @@ final class AdyenBridge implements AdyenBridgeInterface
         $escapedPairs = [];
 
         foreach ($params as $key => $value) {
-            $escapedPairs[$key] = str_replace(':','\\:', str_replace('\\', '\\\\', $value));
+            $escapedPairs[$key] = str_replace(':','\\:', str_replace('\\', '\\\\', (string) $value));
         }
 
         if (false === $isNotify) {
@@ -196,7 +195,7 @@ final class AdyenBridge implements AdyenBridgeInterface
         $data = [];
 
         foreach (array_keys($this->notificationFields) as $fieldKey) {
-            $data[$fieldKey] = $params[$fieldKey];
+            $data[$fieldKey] = $params[$fieldKey] ?? null;
         }
 
         return $this->merchantSig($data, true,'notification_hmac');
@@ -305,6 +304,7 @@ final class AdyenBridge implements AdyenBridgeInterface
             ]
         ];
 
+        // @phpstan-ignore-next-line
         return $this->soapClient->refund($data);
     }
 }

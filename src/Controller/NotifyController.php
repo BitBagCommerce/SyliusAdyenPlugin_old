@@ -15,6 +15,7 @@ namespace BitBag\SyliusAdyenPlugin\Controller;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\Payum;
 use Payum\Core\Request\Notify;
+use Payum\Core\Security\TokenInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Repository\PaymentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +53,7 @@ final class NotifyController
      */
     public function doAction(Request $request): Response
     {
-        $notificationItems = $request->request->get('notificationItems', []);
+        $notificationItems = $request->request->all('notificationItems');
 
         if (count($notificationItems) === 0 || !isset($notificationItems[0]['NotificationRequestItem']['merchantReference'])) {
             throw new LogicException("A parameter merchantReference not be found.");
@@ -64,19 +65,20 @@ final class NotifyController
             explode('-', $merchantReference)[1] : null
         ;
 
-        /** @var PaymentInterface $payment */
+        /** @var ?PaymentInterface $payment */
         $payment = $this->paymentRepository->findOneBy(['id' => $paymentId]);
 
         if (null === $payment) {
             throw new NotFoundHttpException("Payment not found ");
         }
 
-        $hash = null !== $payment ? json_decode($payment->getDetails()['extraData'], true)['notifyToken'] : '';
+        $hash = json_decode($payment->getDetails()['extraData'], true)['notifyToken'];
 
-        if (false === $token = $this->payum->getTokenStorage()->find($hash)) {
+        if (null === $token = $this->payum->getTokenStorage()->find($hash)) {
             throw new NotFoundHttpException(sprintf("A token with hash `%s` could not be found.", $hash));
         }
 
+        /** @var TokenInterface $token */
         $gateway = $this->payum->getGateway($token->getGatewayName());
 
         $gateway->execute(new Notify($token));

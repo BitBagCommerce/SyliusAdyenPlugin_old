@@ -47,7 +47,7 @@ final class StatusAction implements ActionInterface, ApiAwareInterface, GatewayA
     /**
      * {@inheritDoc}
      *
-     * @param GetStatusInterface $request
+     * @param mixed|GetStatusInterface $request
      */
     public function execute($request): void
     {
@@ -100,18 +100,16 @@ final class StatusAction implements ActionInterface, ApiAwareInterface, GatewayA
     private function resolvePaymentStatus(string $authResult, GetStatusInterface $request): void
     {
         switch ($authResult) {
-            case null:
+            case '':
                 $request->markNew();
                 break;
             case AdyenBridgeInterface::AUTHORISED:
+            case AdyenBridgeInterface::CAPTURE:
             case AdyenBridgeInterface::AUTHORISATION:
                 $request->markCaptured();
                 break;
             case AdyenBridgeInterface::PENDING:
                 $request->markPending();
-                break;
-            case AdyenBridgeInterface::CAPTURE:
-                $request->markCaptured();
                 break;
             case AdyenBridgeInterface::CANCELLED:
             case AdyenBridgeInterface::CANCELLATION:

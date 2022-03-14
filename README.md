@@ -1,4 +1,7 @@
-# [![](https://bitbag.io/wp-content/uploads/2020/10/adyen-1024x535.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_adyen)
+> :warning: **BEWARE!**
+> This repository has been deprecated and will not be maintained or evolved by the BitBag Team. You can still use it with compatible Sylius versions, but at your own risk, as no bugs will be fixed on it.
+
+> Here you can find the new version of the plugin: [SyliusAdyenPlugin](https://github.com/BitBagCommerce/SyliusAdyenPlugin)
 
 # Adyen Payments Plugin for Sylius
 ----

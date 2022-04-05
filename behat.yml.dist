@@ -6,7 +6,7 @@ default:
     extensions:
         DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
 
-        Lakion\Behat\MinkDebugExtension:
+        FriendsOfBehat\MinkDebugExtension:
             directory: etc/build
             clean_start: false
             screenshot: true
@@ -46,10 +46,7 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
-                debug: true
                 class: Tests\BitBag\SyliusAdyenPlugin\Application\Kernel
-                path: tests/Application/Kernel.php
-                environment: test
 
         FriendsOfBehat\VariadicExtension: ~
 

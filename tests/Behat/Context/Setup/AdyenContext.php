@@ -14,12 +14,13 @@ namespace Tests\BitBag\SyliusAdyenPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridgeInterface;
+use Doctrine\ORM\EntityManager;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\Repository\PaymentMethodRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Tests\BitBag\SyliusAdyenPlugin\Behat\Page\External\AdyenCheckoutPage;
 
 final class AdyenContext implements Context
 {
@@ -53,14 +54,14 @@ final class AdyenContext implements Context
      * @param PaymentMethodRepositoryInterface $paymentMethodRepository
      * @param ExampleFactoryInterface $paymentMethodExampleFactory
      * @param FactoryInterface $paymentMethodTranslationFactory
-     * @param ObjectManager $paymentMethodManager
+     * @param EntityManager $paymentMethodManager
      */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         PaymentMethodRepositoryInterface $paymentMethodRepository,
         ExampleFactoryInterface $paymentMethodExampleFactory,
         FactoryInterface $paymentMethodTranslationFactory,
-        ObjectManager $paymentMethodManager
+        EntityManager $paymentMethodManager
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->paymentMethodRepository = $paymentMethodRepository;
@@ -82,8 +83,8 @@ final class AdyenContext implements Context
         $paymentMethod->getGatewayConfig()->setConfig([
             'skinCode' => 'test',
             'merchantAccount' => 'test',
-            'hmacKey' => 111,
-            'hmacNotification' => 111,
+            'hmacKey' => AdyenCheckoutPage::HMAC_KEY,
+            'hmacNotification' => AdyenCheckoutPage::NOTIFICATION_HMAC,
             'environment' => AdyenBridgeInterface::TEST_ENVIRONMENT,
             'wsUser' => 'test',
             'wsUserPassword' => 'test',

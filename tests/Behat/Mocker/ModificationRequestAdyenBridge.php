@@ -35,11 +35,6 @@ class ModificationRequestAdyenBridge implements ModificationRequestAdyenBridgeIn
         string $originalReference,
         string $reference
     ): \stdClass {
-        return $this->container->get('bitbag_sylius_adyen_plugin.bridge.modification_request_adyen')->refundRequest(
-            $adyenBridge,
-            $modificationAmount,
-            $originalReference,
-            $reference
-        );
+        return new \stdClass();
     }
 }

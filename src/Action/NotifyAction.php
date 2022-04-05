@@ -49,7 +49,7 @@ final class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayA
     /**
      * {@inheritDoc}
      *
-     * @param Notify $request
+     * @param mixed|Notify $request
      */
     public function execute($request): void
     {
@@ -64,19 +64,19 @@ final class NotifyAction implements ActionInterface, ApiAwareInterface, GatewayA
         if (!isset($data['merchantReference']) || empty($data['merchantReference'])) {
             $details['response_status'] = 401;
 
-            throw new HttpResponse(null, Response::HTTP_UNAUTHORIZED);
+            throw new HttpResponse('', Response::HTTP_UNAUTHORIZED);
         }
 
         if (!isset($details['merchantReference']) || ($details['merchantReference'] !== $data['merchantReference'])) {
             $details['response_status'] = 402;
 
-            throw new HttpResponse(null, Response::HTTP_PAYMENT_REQUIRED);
+            throw new HttpResponse('', Response::HTTP_PAYMENT_REQUIRED);
         }
 
         if (false === $this->api->verifyNotification($data)) {
             $details['response_status'] = 403;
 
-            throw new HttpResponse(null, Response::HTTP_FORBIDDEN);
+            throw new HttpResponse('', Response::HTTP_FORBIDDEN);
         }
 
         if (isset($data['eventCode'])) {

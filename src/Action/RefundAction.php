@@ -61,7 +61,7 @@ final class RefundAction implements ActionInterface, ApiAwareInterface, GatewayA
     /**
      * {@inheritDoc}
      *
-     * @param Refund $request
+     * @param mixed|Refund $request
      */
     public function execute($request): void
     {
@@ -70,6 +70,7 @@ final class RefundAction implements ActionInterface, ApiAwareInterface, GatewayA
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
         try {
+
             $this->modificationRequestAdyenBridge->refundRequest(
                 $this->api,
                 [
@@ -78,7 +79,7 @@ final class RefundAction implements ActionInterface, ApiAwareInterface, GatewayA
                 ],
                 $details['pspReference'],
                 $details['merchantReference']
-            )->refundResult;
+            );
 
             $details['authResult'] = AdyenBridgeInterface::REFUND;
 

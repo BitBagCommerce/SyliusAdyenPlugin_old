@@ -40,7 +40,7 @@ final class OrderContext implements Context
      */
     public function iGoToTheOrderForThisPayment(OrderInterface $order): void
     {
-       $this->showPage->open(['id' => $order->getId()]);
+       $this->showPage->tryToOpen(['id' => $order->getId()]);
     }
 
     /**

@@ -37,9 +37,9 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Generic
     protected $api;
 
     /**
-     * @var GenericTokenFactoryInterface
+     * @var null|GenericTokenFactoryInterface
      */
-    protected $tokenFactory;
+    protected ?GenericTokenFactoryInterface $tokenFactory;
 
     /**
      * {@inheritDoc}
@@ -54,7 +54,7 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Generic
     }
 
     /**
-     * @param GenericTokenFactoryInterface $genericTokenFactory
+     * @param null|GenericTokenFactoryInterface $genericTokenFactory
      *
      * @return void
      */
@@ -66,13 +66,13 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Generic
     /**
      * {@inheritDoc}
      *
-     * @param Capture $request
+     * @param mixed|Capture $request
      */
     public function execute($request): void
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        /** @var TokenInterface $token */
+        /** @var ?TokenInterface $token */
         $token = $request->getToken();
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
@@ -92,13 +92,13 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Generic
 
         $extraData = $model['extraData'] ? json_decode($model['extraData'], true) : [];
 
-        if (false === isset($extraData['capture_token']) && $token) {
+        if (false === isset($extraData['capture_token']) && null !== $token && null !== $this->tokenFactory) {
             $extraData['captureToken'] = $token->getHash();
             $extraData['refundToken'] = $this->tokenFactory->createRefundToken($token->getGatewayName(), $token->getDetails() ?? $model)->getHash();
             $model['resURL'] = $token->getTargetUrl();
         }
 
-        if (false === isset($extraData['notify_token']) && $token && $this->tokenFactory) {
+        if (false === isset($extraData['notify_token']) && null !== $token && null !== $this->tokenFactory) {
             $notifyToken = $this->tokenFactory->createNotifyToken(
                 $token->getGatewayName(),
                 $token->getDetails()

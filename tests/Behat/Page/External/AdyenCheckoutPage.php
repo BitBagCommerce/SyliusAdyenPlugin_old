@@ -19,8 +19,10 @@ use BitBag\SyliusAdyenPlugin\Bridge\AdyenBridgeInterface;
 use Payum\Core\Security\TokenInterface;
 use FriendsOfBehat\PageObjectExtension\Page\Page;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Core\Model\AdminUser;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\BrowserKit\Client;
 
 final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
@@ -41,7 +43,7 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
     private $paymentRepository;
 
     /**
-     * @var Client
+     * @var KernelBrowser
      */
     private $client;
 
@@ -89,14 +91,17 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
     ];
 
     /** @var string */
-    private $notificationHmac = '70E4534EACDDFF68B79FD36DEE365B9905AC9A501406CE5DCFF7C67A69CE98A4';
+    public const NOTIFICATION_HMAC = '70E4534EACDDFF68B79FD36DEE365B9905AC9A501406CE5DCFF7C67A69CE98A4';
+    private $notificationHmac = self::NOTIFICATION_HMAC;
+    public const HMAC_KEY = 'DFB1EB5485895CFA84146406857104ABB4CBCABDC8AAF103A624C8F6A3EAAB00';
+    private $hmacKey = self::HMAC_KEY;
 
     public function __construct(
         Session $session,
         $parameters,
         RepositoryInterface $securityTokenRepository,
         EntityRepository $paymentRepository,
-        Client $client
+        KernelBrowser $client
     ) {
         parent::__construct($session, $parameters);
 
@@ -107,7 +112,7 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
         $this->adyenBridge = new AdyenBridge([
             'skinCode' => 'test',
             'merchantAccount' => 'test',
-            'hmacKey' => 111,
+            'hmacKey' => $this->hmacKey,
             'notification_hmac' => $this->notificationHmac,
             'environment' => 'test',
             'notification_method' => 'basic',
@@ -159,7 +164,9 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
             $this->notifyData['notificationItems'][0]['NotificationRequestItem']
         );
 
-        $this->client->request('POST', '/payment/adyen/notify', $data);
+
+        dd($this->client->request('POST', '/payment/adyen/notify', $data));
+
     }
 
     /**
@@ -168,11 +175,19 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
     public function successRefundedPaymentNotify(): void
     {
         $token = $this->findToken('refund');
-
         $data = $this->notifyData;
-        $data['merchantReference'] = $this->createMerchantReferenceWithToken($token);
-        $data['eventCode'] = 'REFUND';
-        $data['additionalData_hmacSignature'] = $this->adyenBridge->createSignatureForNotification($data);
+
+        /** @var PaymentInterface $payment */
+        $payment = $this->paymentRepository->find($token->getDetails()->getId());
+        $data['notificationItems'][0]['NotificationRequestItem']['amount']['value'] = (string) $payment->getAmount();
+        $data['notificationItems'][0]['NotificationRequestItem']['amount']['currency'] = $payment->getCurrencyCode();
+        $data['notificationItems'][0]['NotificationRequestItem']['merchantReference'] = $this->createMerchantReferenceWithToken($token);
+        $data['notificationItems'][0]['NotificationRequestItem']['eventCode'] = 'REFUND';
+        unset($data['notificationItems'][0]['NotificationRequestItem']['additionalData']);
+        $data['notificationItems'][0]['NotificationRequestItem']['additionalData']['hmacSignature'] = (new HmacSignature())->calculateNotificationHMAC(
+            $this->notificationHmac,
+            $data['notificationItems'][0]['NotificationRequestItem']
+        );
 
         $this->client->request('POST', '/payment/adyen/notify', $data);
     }
@@ -192,6 +207,7 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
         $data['additionalData_hmacSignature'] = $this->adyenBridge->createSignatureForNotification($data);
 
         $this->client->request('POST', '/payment/adyen/notify', $data);
+        $this->client->enableReboot();
     }
 
     /**
@@ -230,7 +246,6 @@ final class AdyenCheckoutPage extends Page implements AdyenCheckoutPageInterface
     {
         /** @var PaymentInterface $payment */
         $payment = $this->paymentRepository->find($token->getDetails()->getId());
-
         return (string)($payment->getOrder()->getNumber() . '-' . $payment->getId());
     }
 }

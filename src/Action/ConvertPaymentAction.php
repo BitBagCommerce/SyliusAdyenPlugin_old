@@ -23,7 +23,7 @@ final class ConvertPaymentAction implements ActionInterface
     /**
      * {@inheritDoc}
      *
-     * @param Convert $request
+     * @param mixed|Convert $request
      */
     public function execute($request): void
     {
@@ -34,15 +34,16 @@ final class ConvertPaymentAction implements ActionInterface
         /** @var OrderInterface $order */
         $order = $payment->getOrder();
 
+        $details = [];
         $details['merchantReference'] = $order->getNumber() . "-" . $payment->getId();
         $details['paymentAmount'] = $payment->getAmount();
-        $details['shopperEmail'] = $order->getCustomer()->getEmail();
+        $details['shopperEmail'] = $order->getCustomer() !== null ? $order->getCustomer()->getEmail() : null;
         $details['currencyCode'] = $order->getCurrencyCode();
-        $details['shopperReference'] = $order->getCustomer()->getId();
+        $details['shopperReference'] = $order->getCustomer() !== null ? $order->getCustomer()->getId() : null;
         $details['shopperLocale'] = $order->getLocaleCode();
         $details['countryCode'] = null !== $order->getShippingAddress() ? $order->getShippingAddress()->getCountryCode() : null;
 
-        $request->setResult((array) $details);
+        $request->setResult($details);
     }
 
     /**

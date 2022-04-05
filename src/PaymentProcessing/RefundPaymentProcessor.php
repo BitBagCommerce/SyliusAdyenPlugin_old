@@ -15,6 +15,7 @@ namespace BitBag\SyliusAdyenPlugin\PaymentProcessing;
 use BitBag\SyliusAdyenPlugin\AdyenGatewayFactory;
 use Payum\Core\Payum;
 use Payum\Core\Request\Refund;
+use Payum\Core\Security\TokenInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
@@ -53,6 +54,10 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
         /** @var PaymentMethodInterface $paymentMethod */
         $paymentMethod = $payment->getMethod();
 
+        if (null === $paymentMethod->getGatewayConfig()) {
+            return;
+        }
+
         if (AdyenGatewayFactory::FACTORY_NAME !== $paymentMethod->getGatewayConfig()->getFactoryName()) {
             return;
         }
@@ -62,12 +67,13 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
             return;
         }
 
-        $hash = null !== $payment ? json_decode($payment->getDetails()['extraData'], true)['refundToken'] : '';
+        $hash = json_decode($payment->getDetails()['extraData'], true)['refundToken'];
 
-        if (false === $token = $this->payum->getTokenStorage()->find($hash)) {
+        if (null === $token = $this->payum->getTokenStorage()->find($hash)) {
             throw new UpdateHandlingException(sprintf("A token with hash `%s` could not be found.", $hash));
         }
 
+        /** @var TokenInterface $token */
         $gateway = $this->payum->getGateway($token->getGatewayName());
 
         $gateway->execute(new Refund($token));

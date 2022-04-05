@@ -49,7 +49,7 @@ final class AdyenGatewayFactory extends GatewayFactory
                 'hmacKey',
             ];
 
-            $config['payum.api'] = function (ArrayObject $config) {
+            $config['payum.api'] = static function (ArrayObject $config): AdyenBridge {
                 $config->validateNotEmpty($config['payum.required_options']);
 
                 return new AdyenBridge(
@@ -63,8 +63,7 @@ final class AdyenGatewayFactory extends GatewayFactory
                         'default_payment_fields' => $config['default_payment_fields'],
                         'ws_user' => $config['wsUser'],
                         'ws_user_password' => $config['wsUserPassword'],
-                    ],
-                    $config['payum.http_client']
+                    ]
                 );
             };
         }
